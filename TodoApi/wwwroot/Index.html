@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Hava Durumu</title>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>5 günlük hava durumu</h1>
+    <div>
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Sıcaklık</th>
+                <th>Açıklama</th>
+            </tr>
+        </thead>
+  
+    </table>
+    </div>
+
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        fetch("/api/HavaDurumu")
+            .then(res => res.json())
+            .then(data => {
+                for (const gun of data) {
+                    document.getElementById("sonuc").innerHTML += 
+                        `<tr>
+                        <td> ${tarihiBicimlendir(gun.tarih)}</td >
+                        <td> ${gun.sicaklik}</td >
+                        <td> ${gun.aciklama}</td >
+                    </tr>`;
+                }           
+                });
+
+        function tarihBicimlendir(tarih) {
+            const yil = tarih.substr(0, 4);
+            const ay = tarih.substr(5, 2);
+            const gun = tarih.substr(8, 2);
+            return gun + "," + ay + "." + yil;
+        }
+
+    </script>
+        
+
+</body>
+</html>
